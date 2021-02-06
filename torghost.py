@@ -128,7 +128,7 @@ def start_torghost():
             print(bcolors.GREEN + '[done]' + bcolors.ENDC)
 
     print(t() + ' Stopping tor service '),
-    os.system('sudo killall tor')
+    os.system('sudo killall tor > /dev/null')
     os.system('sudo fuser -k 9051/tcp > /dev/null 2>&1')
     print(bcolors.GREEN + '[done]' + bcolors.ENDC)
     print(t() + ' Starting new tor daemon '),
@@ -186,9 +186,9 @@ def stop_torghost():
     os.system(IpFlush)
     os.system('sudo fuser -k 9051/tcp > /dev/null 2>&1')
     print(bcolors.GREEN + '[done]' + bcolors.ENDC)
-    print(t() + ' Stoping tor'),
-    os.system('sudo killall tor')
-    print(bcolors.GREEN + '[done]' + bcolors.ENDC)
+    #print(t() + ' Stoping tor'),
+    #os.system('sudo killall tor')
+    #print(bcolors.GREEN + '[done]' + bcolors.ENDC)
     print(t() + ' Fetching current IP...')
     time.sleep(3)
     print(t() + ' CURRENT IP : ' + bcolors.GREEN + ip() + bcolors.ENDC)
