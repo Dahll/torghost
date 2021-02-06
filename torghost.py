@@ -108,7 +108,9 @@ resolv = '/etc/resolv.conf'
 
 def start_torghost():
     print(t() + ' Always check for updates using -u option')
-    os.system('sudo cp /etc/resolv.conf /etc/resolv.conf.bak')
+    
+    if not os.path.exists("/etc/resolv.conf.bak"):
+        os.system('sudo cp /etc/resolv.conf /etc/resolv.conf.bak')
     if os.path.exists(Torrc) and TorrcCfgString in open(Torrc).read():
         print(t() + ' Torrc file already configured')
     else:
@@ -169,7 +171,7 @@ def start_torghost():
 def stop_torghost():
     print(bcolors.RED + t() + 'STOPPING torghost' + bcolors.ENDC)
     print(t() + ' Flushing iptables, resetting to default'),
-    os.system('cat /etc/resolv.conf.bak > /etc/resolv.conf')
+    os.system('sudo cat /etc/resolv.conf.bak > /etc/resolv.conf; sudo rm /etc/resolv.conf.bak;')
     IpFlush = \
         """
 	iptables -P INPUT ACCEPT
@@ -183,8 +185,8 @@ def stop_torghost():
     os.system(IpFlush)
     os.system('sudo fuser -k 9051/tcp > /dev/null 2>&1')
     print(bcolors.GREEN + '[done]' + bcolors.ENDC)
-    print(t() + ' Restarting Network manager'),
-    os.system('service network-manager restart')
+    print(t() + ' Stoping tor'),
+    os.system('sudo killall tor')
     print(bcolors.GREEN + '[done]' + bcolors.ENDC)
     print(t() + ' Fetching current IP...')
     time.sleep(3)
