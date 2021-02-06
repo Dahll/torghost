@@ -126,7 +126,7 @@ def start_torghost():
             print(bcolors.GREEN + '[done]' + bcolors.ENDC)
 
     print(t() + ' Stopping tor service '),
-    os.system('sudo systemctl stop tor')
+    os.system('sudo killall tor')
     os.system('sudo fuser -k 9051/tcp > /dev/null 2>&1')
     print(bcolors.GREEN + '[done]' + bcolors.ENDC)
     print(t() + ' Starting new tor daemon '),
