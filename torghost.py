@@ -171,7 +171,8 @@ def start_torghost():
 def stop_torghost():
     print(bcolors.RED + t() + 'STOPPING torghost' + bcolors.ENDC)
     print(t() + ' Flushing iptables, resetting to default'),
-    os.system('sudo cat /etc/resolv.conf.bak > /etc/resolv.conf; sudo rm /etc/resolv.conf.bak;')
+    if os.path.exists("/etc/resolv.conf.bak"):
+        os.system('sudo cat /etc/resolv.conf.bak > /etc/resolv.conf; sudo rm /etc/resolv.conf.bak;')
     IpFlush = \
         """
 	iptables -P INPUT ACCEPT
